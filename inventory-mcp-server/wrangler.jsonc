@@ -11,7 +11,7 @@
       "binding": "DB",
       "database_name": "inventory",
       "database_id": "4c003dd6-d021-442a-90a9-670435691c2a",
-      "migrations_dir": "drizzle/migrations"
+      "migrations_dir": "drizzle"
     }
   ],
   "migrations": [

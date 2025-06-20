@@ -11,7 +11,7 @@
       "binding": "DB",
       "database_name": "cart",
       "database_id": "9ceed2bb-3aeb-4385-8c1d-1d0303a14733",
-      "migrations_dir": "drizzle/migrations"
+      "migrations_dir": "drizzle"
     }
   ],
   "migrations": [
