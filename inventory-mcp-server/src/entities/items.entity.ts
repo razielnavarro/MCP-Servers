@@ -9,8 +9,8 @@ export const items = sqliteTable("items", {
   description: text("description"),
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
-    .default(Date.now()),
+    .default(new Date()),
   updatedAt: integer("updated_at", { mode: "timestamp" })
     .notNull()
-    .default(Date.now()),
+    .default(new Date()),
 });

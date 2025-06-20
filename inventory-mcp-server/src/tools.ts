@@ -22,25 +22,28 @@ async function listItems(
   options?: { category?: string; sortBy?: string; limit?: number }
 ) {
   const db = getDb(env);
-  let query = db.select().from(entities.items);
+
+  let baseQuery: any = db.select().from(entities.items);
 
   if (options?.category) {
-    query = query.where(like(entities.items.category, `%${options.category}%`));
+    baseQuery = baseQuery.where(
+      like(entities.items.category, `%${options.category}%`)
+    );
   }
 
   if (options?.sortBy === "price") {
-    query = query.orderBy(asc(entities.items.price));
+    baseQuery = baseQuery.orderBy(asc(entities.items.price));
   } else if (options?.sortBy === "name") {
-    query = query.orderBy(asc(entities.items.name));
+    baseQuery = baseQuery.orderBy(asc(entities.items.name));
   } else {
-    query = query.orderBy(desc(entities.items.createdAt));
+    baseQuery = baseQuery.orderBy(desc(entities.items.createdAt));
   }
 
   if (options?.limit) {
-    query = query.limit(options.limit);
+    baseQuery = baseQuery.limit(options.limit);
   }
 
-  return await query.all();
+  return await baseQuery.all();
 }
 
 async function getItem(env: any, id: string) {

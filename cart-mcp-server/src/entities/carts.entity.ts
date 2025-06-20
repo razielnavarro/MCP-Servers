@@ -6,8 +6,8 @@ export const carts = sqliteTable("carts", {
   quantity: integer("quantity").notNull(),
   addedAt: integer("added_at", { mode: "timestamp" })
     .notNull()
-    .default(Date.now()),
+    .default(new Date()),
   updatedAt: integer("updated_at", { mode: "timestamp" })
     .notNull()
-    .default(Date.now()),
+    .default(new Date()),
 });

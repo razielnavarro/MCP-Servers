@@ -13,5 +13,25 @@
       "database_id": "9ceed2bb-3aeb-4385-8c1d-1d0303a14733",
       "migrations_dir": "drizzle/migrations"
     }
+  ],
+  "migrations": [
+    {
+      "new_sqlite_classes": ["CartMCP"],
+      "tag": "v1"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "class_name": "CartMCP",
+        "name": "MCP_OBJECT"
+      }
+    ]
+  },
+  "mcp": [
+    {
+      "binding": "MCP_OBJECT",
+      "resource": "cart-mcp-server"
+    }
   ]
 }

@@ -13,5 +13,25 @@
       "database_id": "4c003dd6-d021-442a-90a9-670435691c2a",
       "migrations_dir": "drizzle/migrations"
     }
+  ],
+  "migrations": [
+    {
+      "new_sqlite_classes": ["InventoryMCP"],
+      "tag": "v1"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "class_name": "InventoryMCP",
+        "name": "MCP_OBJECT"
+      }
+    ]
+  },
+  "mcp": [
+    {
+      "binding": "MCP_OBJECT",
+      "resource": "inventory-mcp-server"
+    }
   ]
 }
