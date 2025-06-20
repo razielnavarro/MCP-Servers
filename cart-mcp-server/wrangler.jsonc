@@ -1,7 +1,7 @@
 {
   "name": "cart-mcp-server",
   "main": "src/index.ts",
-  "compatibility_date": "2024-01-01",
+  "compatibility_date": "2024-09-23",
   "compatibility_flags": ["nodejs_compat"],
   "env": {
     "DB": "cart"
@@ -10,7 +10,8 @@
     {
       "binding": "DB",
       "database_name": "cart",
-      "database_id": "your-cart-database-id"
+      "database_id": "9ceed2bb-3aeb-4385-8c1d-1d0303a14733",
+      "migrations_dir": "drizzle/migrations"
     }
   ]
 }

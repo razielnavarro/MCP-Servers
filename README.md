@@ -72,7 +72,6 @@ MCP-Servers/
 │   ├── package.json
 │   ├── wrangler.jsonc
 │   └── README.md
-└── my-mcp-server/                # Original monolithic server (for reference)
 ```
 
 ## Setup Instructions

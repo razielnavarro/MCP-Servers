@@ -1,7 +1,8 @@
 {
     "out": "./drizzle",
     "schema": "./src/entities/*.ts",
-    "driver": "d1",
+    "dialect": "sqlite",
+    "driver": "d1-http",
     "dbCredentials": {
         "dbName": "inventory",
         "wranglerConfigPath": "./wrangler.jsonc"

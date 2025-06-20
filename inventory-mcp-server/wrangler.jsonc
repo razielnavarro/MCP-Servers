@@ -1,7 +1,7 @@
 {
   "name": "inventory-mcp-server",
   "main": "src/index.ts",
-  "compatibility_date": "2024-01-01",
+  "compatibility_date": "2024-09-23",
   "compatibility_flags": ["nodejs_compat"],
   "env": {
     "DB": "inventory"
@@ -10,7 +10,8 @@
     {
       "binding": "DB",
       "database_name": "inventory",
-      "database_id": "your-inventory-database-id"
+      "database_id": "4c003dd6-d021-442a-90a9-670435691c2a",
+      "migrations_dir": "drizzle/migrations"
     }
   ]
 }
