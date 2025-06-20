@@ -1,0 +1,16 @@
+{
+  "name": "cart-mcp-server",
+  "main": "src/index.ts",
+  "compatibility_date": "2024-01-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "env": {
+    "DB": "cart"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "cart",
+      "database_id": "your-cart-database-id"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+    "out": "./drizzle",
+    "schema": "./src/entities/*.ts",
+    "driver": "d1",
+    "dbCredentials": {
+        "dbName": "cart",
+        "wranglerConfigPath": "./wrangler.jsonc"
+    }
+}
