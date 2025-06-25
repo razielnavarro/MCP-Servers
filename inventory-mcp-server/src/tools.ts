@@ -25,10 +25,17 @@ async function listItems(
 
   let baseQuery: any = db.select().from(entities.items);
 
-  if (options?.category) {
+  if (options?.category && options.category !== "all") {
+    console.log(
+      `📦 [INVENTORY MCP] Filtering by category: "${options.category}"`
+    );
     baseQuery = baseQuery.where(
       like(entities.items.category, `%${options.category}%`)
     );
+  } else if (options?.category === "all") {
+    console.log(`📦 [INVENTORY MCP] Category is "all" - returning all items`);
+  } else {
+    console.log(`📦 [INVENTORY MCP] No category filter applied`);
   }
 
   if (options?.sortBy === "price") {
@@ -186,12 +193,20 @@ export function registerTools(server: any, env: any) {
     async (args: {
       schema: { category?: string; sortBy?: string; limit?: number };
     }) => {
+      console.log(
+        "📦 [INVENTORY MCP] listItems called with args:",
+        JSON.stringify(args, null, 2)
+      );
+      console.log("📦 [INVENTORY MCP] Timestamp:", new Date().toISOString());
+
       try {
         const items = await listItems(env, args.schema);
+        console.log("📦 [INVENTORY MCP] listItems result count:", items.length);
         return {
           content: [{ type: "text", text: JSON.stringify(items, null, 2) }],
         };
       } catch (error) {
+        console.error("📦 [INVENTORY MCP] listItems error:", error);
         return {
           content: [
             {
@@ -211,17 +226,29 @@ export function registerTools(server: any, env: any) {
     "getItem",
     { schema: z.object({ id: z.string() }) },
     async (args: { schema: { id: string } }) => {
+      console.log(
+        "📦 [INVENTORY MCP] getItem called with args:",
+        JSON.stringify(args, null, 2)
+      );
+      console.log("📦 [INVENTORY MCP] Timestamp:", new Date().toISOString());
+
       try {
         const item = await getItem(env, args.schema.id);
         if (!item) {
+          console.log("📦 [INVENTORY MCP] getItem result: Item not found");
           return {
             content: [{ type: "text", text: "Item not found" }],
           };
         }
+        console.log(
+          "📦 [INVENTORY MCP] getItem result:",
+          JSON.stringify(item, null, 2)
+        );
         return {
           content: [{ type: "text", text: JSON.stringify(item, null, 2) }],
         };
       } catch (error) {
+        console.error("📦 [INVENTORY MCP] getItem error:", error);
         return {
           content: [
             {
@@ -241,12 +268,23 @@ export function registerTools(server: any, env: any) {
     "createItem",
     { schema: CreateItemSchema },
     async (args: { schema: z.infer<typeof CreateItemSchema> }) => {
+      console.log(
+        "📦 [INVENTORY MCP] createItem called with args:",
+        JSON.stringify(args, null, 2)
+      );
+      console.log("📦 [INVENTORY MCP] Timestamp:", new Date().toISOString());
+
       try {
         const result = await createItem(env, args.schema);
+        console.log(
+          "📦 [INVENTORY MCP] createItem result:",
+          JSON.stringify(result, null, 2)
+        );
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
       } catch (error) {
+        console.error("📦 [INVENTORY MCP] createItem error:", error);
         return {
           content: [
             {
@@ -266,12 +304,23 @@ export function registerTools(server: any, env: any) {
     "updateItem",
     { schema: UpdateItemSchema },
     async (args: { schema: z.infer<typeof UpdateItemSchema> }) => {
+      console.log(
+        "📦 [INVENTORY MCP] updateItem called with args:",
+        JSON.stringify(args, null, 2)
+      );
+      console.log("📦 [INVENTORY MCP] Timestamp:", new Date().toISOString());
+
       try {
         const result = await updateItem(env, args.schema);
+        console.log(
+          "📦 [INVENTORY MCP] updateItem result:",
+          JSON.stringify(result, null, 2)
+        );
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
       } catch (error) {
+        console.error("📦 [INVENTORY MCP] updateItem error:", error);
         return {
           content: [
             {
@@ -291,12 +340,23 @@ export function registerTools(server: any, env: any) {
     "deleteItem",
     { schema: z.object({ id: z.string() }) },
     async (args: { schema: { id: string } }) => {
+      console.log(
+        "📦 [INVENTORY MCP] deleteItem called with args:",
+        JSON.stringify(args, null, 2)
+      );
+      console.log("📦 [INVENTORY MCP] Timestamp:", new Date().toISOString());
+
       try {
         const result = await deleteItem(env, args.schema.id);
+        console.log(
+          "📦 [INVENTORY MCP] deleteItem result:",
+          JSON.stringify(result, null, 2)
+        );
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
       } catch (error) {
+        console.error("📦 [INVENTORY MCP] deleteItem error:", error);
         return {
           content: [
             {
@@ -316,12 +376,23 @@ export function registerTools(server: any, env: any) {
     "updateStock",
     { schema: StockUpdateSchema },
     async (args: { schema: z.infer<typeof StockUpdateSchema> }) => {
+      console.log(
+        "📦 [INVENTORY MCP] updateStock called with args:",
+        JSON.stringify(args, null, 2)
+      );
+      console.log("📦 [INVENTORY MCP] Timestamp:", new Date().toISOString());
+
       try {
         const result = await updateStock(env, args.schema);
+        console.log(
+          "📦 [INVENTORY MCP] updateStock result:",
+          JSON.stringify(result, null, 2)
+        );
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
       } catch (error) {
+        console.error("📦 [INVENTORY MCP] updateStock error:", error);
         return {
           content: [
             {
@@ -341,12 +412,23 @@ export function registerTools(server: any, env: any) {
     "getLowStockItems",
     { schema: z.object({ threshold: z.number().default(10) }) },
     async (args: { schema: { threshold: number } }) => {
+      console.log(
+        "📦 [INVENTORY MCP] getLowStockItems called with args:",
+        JSON.stringify(args, null, 2)
+      );
+      console.log("📦 [INVENTORY MCP] Timestamp:", new Date().toISOString());
+
       try {
         const items = await getLowStockItems(env, args.schema.threshold);
+        console.log(
+          "📦 [INVENTORY MCP] getLowStockItems result count:",
+          items.length
+        );
         return {
           content: [{ type: "text", text: JSON.stringify(items, null, 2) }],
         };
       } catch (error) {
+        console.error("📦 [INVENTORY MCP] getLowStockItems error:", error);
         return {
           content: [
             {
@@ -366,12 +448,23 @@ export function registerTools(server: any, env: any) {
     "searchItems",
     { schema: z.object({ query: z.string() }) },
     async (args: { schema: { query: string } }) => {
+      console.log(
+        "📦 [INVENTORY MCP] searchItems called with args:",
+        JSON.stringify(args, null, 2)
+      );
+      console.log("📦 [INVENTORY MCP] Timestamp:", new Date().toISOString());
+
       try {
         const items = await searchItems(env, args.schema.query);
+        console.log(
+          "📦 [INVENTORY MCP] searchItems result count:",
+          items.length
+        );
         return {
           content: [{ type: "text", text: JSON.stringify(items, null, 2) }],
         };
       } catch (error) {
+        console.error("📦 [INVENTORY MCP] searchItems error:", error);
         return {
           content: [
             {

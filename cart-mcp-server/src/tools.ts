@@ -237,12 +237,24 @@ export function registerTools(server: any, env: any, props: any) {
     "addToCart",
     { schema: CartItemSchema },
     async (args: { schema: z.infer<typeof CartItemSchema> }) => {
+      console.log(
+        "🛒 [CART MCP] addToCart called with args:",
+        JSON.stringify(args, null, 2)
+      );
+      console.log("🛒 [CART MCP] User ID:", props.userId);
+      console.log("🛒 [CART MCP] Timestamp:", new Date().toISOString());
+
       try {
         const result = await addToCart(env, args.schema, props.userId);
+        console.log(
+          "🛒 [CART MCP] addToCart result:",
+          JSON.stringify(result, null, 2)
+        );
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
       } catch (error) {
+        console.error("🛒 [CART MCP] addToCart error:", error);
         return {
           content: [
             {
@@ -262,12 +274,24 @@ export function registerTools(server: any, env: any, props: any) {
     "removeFromCart",
     { schema: CartItemSchema },
     async (args: { schema: z.infer<typeof CartItemSchema> }) => {
+      console.log(
+        "🛒 [CART MCP] removeFromCart called with args:",
+        JSON.stringify(args, null, 2)
+      );
+      console.log("🛒 [CART MCP] User ID:", props.userId);
+      console.log("🛒 [CART MCP] Timestamp:", new Date().toISOString());
+
       try {
         const result = await removeFromCart(env, args.schema, props.userId);
+        console.log(
+          "🛒 [CART MCP] removeFromCart result:",
+          JSON.stringify(result, null, 2)
+        );
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
       } catch (error) {
+        console.error("🛒 [CART MCP] removeFromCart error:", error);
         return {
           content: [
             {
@@ -287,12 +311,24 @@ export function registerTools(server: any, env: any, props: any) {
     "updateCartItem",
     { schema: CartUpdateSchema },
     async (args: { schema: z.infer<typeof CartUpdateSchema> }) => {
+      console.log(
+        "🛒 [CART MCP] updateCartItem called with args:",
+        JSON.stringify(args, null, 2)
+      );
+      console.log("🛒 [CART MCP] User ID:", props.userId);
+      console.log("🛒 [CART MCP] Timestamp:", new Date().toISOString());
+
       try {
         const result = await updateCartItem(env, args.schema, props.userId);
+        console.log(
+          "🛒 [CART MCP] updateCartItem result:",
+          JSON.stringify(result, null, 2)
+        );
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
       } catch (error) {
+        console.error("🛒 [CART MCP] updateCartItem error:", error);
         return {
           content: [
             {
@@ -312,12 +348,24 @@ export function registerTools(server: any, env: any, props: any) {
     "viewCart",
     { schema: CartQuerySchema },
     async (args: { schema: z.infer<typeof CartQuerySchema> }) => {
+      console.log(
+        "🛒 [CART MCP] viewCart called with args:",
+        JSON.stringify(args, null, 2)
+      );
+      console.log("🛒 [CART MCP] User ID:", props.userId);
+      console.log("🛒 [CART MCP] Timestamp:", new Date().toISOString());
+
       try {
         const cart = await viewCart(env, props.userId);
+        console.log(
+          "🛒 [CART MCP] viewCart result:",
+          JSON.stringify(cart, null, 2)
+        );
         return {
           content: [{ type: "text", text: JSON.stringify(cart, null, 2) }],
         };
       } catch (error) {
+        console.error("🛒 [CART MCP] viewCart error:", error);
         return {
           content: [
             {
@@ -337,12 +385,24 @@ export function registerTools(server: any, env: any, props: any) {
     "clearCart",
     { schema: CartQuerySchema },
     async (args: { schema: z.infer<typeof CartQuerySchema> }) => {
+      console.log(
+        "🛒 [CART MCP] clearCart called with args:",
+        JSON.stringify(args, null, 2)
+      );
+      console.log("🛒 [CART MCP] User ID:", props.userId);
+      console.log("🛒 [CART MCP] Timestamp:", new Date().toISOString());
+
       try {
         const result = await clearCart(env, props.userId);
+        console.log(
+          "🛒 [CART MCP] clearCart result:",
+          JSON.stringify(result, null, 2)
+        );
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
       } catch (error) {
+        console.error("🛒 [CART MCP] clearCart error:", error);
         return {
           content: [
             {
@@ -362,12 +422,24 @@ export function registerTools(server: any, env: any, props: any) {
     "getCartItemCount",
     { schema: CartQuerySchema },
     async (args: { schema: z.infer<typeof CartQuerySchema> }) => {
+      console.log(
+        "🛒 [CART MCP] getCartItemCount called with args:",
+        JSON.stringify(args, null, 2)
+      );
+      console.log("🛒 [CART MCP] User ID:", props.userId);
+      console.log("🛒 [CART MCP] Timestamp:", new Date().toISOString());
+
       try {
         const stats = await getCartItemCount(env, props.userId);
+        console.log(
+          "🛒 [CART MCP] getCartItemCount result:",
+          JSON.stringify(stats, null, 2)
+        );
         return {
           content: [{ type: "text", text: JSON.stringify(stats, null, 2) }],
         };
       } catch (error) {
+        console.error("🛒 [CART MCP] getCartItemCount error:", error);
         return {
           content: [
             {
@@ -387,12 +459,24 @@ export function registerTools(server: any, env: any, props: any) {
     "addMultipleToCart",
     { schema: BulkCartSchema },
     async (args: { schema: z.infer<typeof BulkCartSchema> }) => {
+      console.log(
+        "🛒 [CART MCP] addMultipleToCart called with args:",
+        JSON.stringify(args, null, 2)
+      );
+      console.log("🛒 [CART MCP] User ID:", props.userId);
+      console.log("🛒 [CART MCP] Timestamp:", new Date().toISOString());
+
       try {
         const result = await addMultipleToCart(env, args.schema, props.userId);
+        console.log(
+          "🛒 [CART MCP] addMultipleToCart result:",
+          JSON.stringify(result, null, 2)
+        );
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
       } catch (error) {
+        console.error("🛒 [CART MCP] addMultipleToCart error:", error);
         return {
           content: [
             {
@@ -412,16 +496,28 @@ export function registerTools(server: any, env: any, props: any) {
     "removeMultipleFromCart",
     { schema: BulkCartSchema },
     async (args: { schema: z.infer<typeof BulkCartSchema> }) => {
+      console.log(
+        "🛒 [CART MCP] removeMultipleFromCart called with args:",
+        JSON.stringify(args, null, 2)
+      );
+      console.log("🛒 [CART MCP] User ID:", props.userId);
+      console.log("🛒 [CART MCP] Timestamp:", new Date().toISOString());
+
       try {
         const result = await removeMultipleFromCart(
           env,
           args.schema,
           props.userId
         );
+        console.log(
+          "🛒 [CART MCP] removeMultipleFromCart result:",
+          JSON.stringify(result, null, 2)
+        );
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
       } catch (error) {
+        console.error("🛒 [CART MCP] removeMultipleFromCart error:", error);
         return {
           content: [
             {
