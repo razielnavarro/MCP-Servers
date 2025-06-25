@@ -18,10 +18,14 @@ function getDb(env: any) {
 }
 
 // Cart Management Functions
-async function addToCart(env: any, input: z.infer<typeof CartItemSchema>) {
+async function addToCart(
+  env: any,
+  input: z.infer<typeof CartItemSchema>,
+  userId: string
+) {
   CartItemSchema.parse(input);
   const db = getDb(env);
-  const { userId, itemId, quantity } = input;
+  const { itemId, quantity } = input;
 
   const existing = await db
     .select()
@@ -61,10 +65,14 @@ async function addToCart(env: any, input: z.infer<typeof CartItemSchema>) {
   return { success: true, message: "Item added to cart" };
 }
 
-async function removeFromCart(env: any, input: z.infer<typeof CartItemSchema>) {
+async function removeFromCart(
+  env: any,
+  input: z.infer<typeof CartItemSchema>,
+  userId: string
+) {
   CartItemSchema.parse(input);
   const db = getDb(env);
-  const { userId, itemId, quantity } = input;
+  const { itemId, quantity } = input;
 
   const existing = await db
     .select()
@@ -110,11 +118,12 @@ async function removeFromCart(env: any, input: z.infer<typeof CartItemSchema>) {
 
 async function updateCartItem(
   env: any,
-  input: z.infer<typeof CartUpdateSchema>
+  input: z.infer<typeof CartUpdateSchema>,
+  userId: string
 ) {
   CartUpdateSchema.parse(input);
   const db = getDb(env);
-  const { userId, itemId, quantity } = input;
+  const { itemId, quantity } = input;
 
   const existing = await db
     .select()
@@ -194,13 +203,14 @@ async function getCartItemCount(env: any, userId: string) {
 
 async function addMultipleToCart(
   env: any,
-  input: z.infer<typeof BulkCartSchema>
+  input: z.infer<typeof BulkCartSchema>,
+  userId: string
 ) {
   BulkCartSchema.parse(input);
-  const { userId, items } = input;
+  const { items } = input;
 
   for (const { itemId, quantity } of items) {
-    await addToCart(env, { userId, itemId, quantity });
+    await addToCart(env, { itemId, quantity }, userId);
   }
 
   return { success: true, message: "Multiple items added to cart" };
@@ -208,26 +218,27 @@ async function addMultipleToCart(
 
 async function removeMultipleFromCart(
   env: any,
-  input: z.infer<typeof BulkCartSchema>
+  input: z.infer<typeof BulkCartSchema>,
+  userId: string
 ) {
   BulkCartSchema.parse(input);
-  const { userId, items } = input;
+  const { items } = input;
 
   for (const { itemId, quantity } of items) {
-    await removeFromCart(env, { userId, itemId, quantity });
+    await removeFromCart(env, { itemId, quantity }, userId);
   }
 
   return { success: true, message: "Multiple items removed from cart" };
 }
 
-export function registerTools(server: any, env: any) {
+export function registerTools(server: any, env: any, props: any) {
   // Add item to cart
   server.tool(
     "addToCart",
     { schema: CartItemSchema },
     async (args: { schema: z.infer<typeof CartItemSchema> }) => {
       try {
-        const result = await addToCart(env, args.schema);
+        const result = await addToCart(env, args.schema, props.userId);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
@@ -252,7 +263,7 @@ export function registerTools(server: any, env: any) {
     { schema: CartItemSchema },
     async (args: { schema: z.infer<typeof CartItemSchema> }) => {
       try {
-        const result = await removeFromCart(env, args.schema);
+        const result = await removeFromCart(env, args.schema, props.userId);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
@@ -277,7 +288,7 @@ export function registerTools(server: any, env: any) {
     { schema: CartUpdateSchema },
     async (args: { schema: z.infer<typeof CartUpdateSchema> }) => {
       try {
-        const result = await updateCartItem(env, args.schema);
+        const result = await updateCartItem(env, args.schema, props.userId);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
@@ -302,7 +313,7 @@ export function registerTools(server: any, env: any) {
     { schema: CartQuerySchema },
     async (args: { schema: z.infer<typeof CartQuerySchema> }) => {
       try {
-        const cart = await viewCart(env, args.schema.userId);
+        const cart = await viewCart(env, props.userId);
         return {
           content: [{ type: "text", text: JSON.stringify(cart, null, 2) }],
         };
@@ -327,7 +338,7 @@ export function registerTools(server: any, env: any) {
     { schema: CartQuerySchema },
     async (args: { schema: z.infer<typeof CartQuerySchema> }) => {
       try {
-        const result = await clearCart(env, args.schema.userId);
+        const result = await clearCart(env, props.userId);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
@@ -352,7 +363,7 @@ export function registerTools(server: any, env: any) {
     { schema: CartQuerySchema },
     async (args: { schema: z.infer<typeof CartQuerySchema> }) => {
       try {
-        const stats = await getCartItemCount(env, args.schema.userId);
+        const stats = await getCartItemCount(env, props.userId);
         return {
           content: [{ type: "text", text: JSON.stringify(stats, null, 2) }],
         };
@@ -377,7 +388,7 @@ export function registerTools(server: any, env: any) {
     { schema: BulkCartSchema },
     async (args: { schema: z.infer<typeof BulkCartSchema> }) => {
       try {
-        const result = await addMultipleToCart(env, args.schema);
+        const result = await addMultipleToCart(env, args.schema, props.userId);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
@@ -402,7 +413,11 @@ export function registerTools(server: any, env: any) {
     { schema: BulkCartSchema },
     async (args: { schema: z.infer<typeof BulkCartSchema> }) => {
       try {
-        const result = await removeMultipleFromCart(env, args.schema);
+        const result = await removeMultipleFromCart(
+          env,
+          args.schema,
+          props.userId
+        );
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };

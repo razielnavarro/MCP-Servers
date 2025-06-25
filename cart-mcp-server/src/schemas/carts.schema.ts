@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 export const CartItemSchema = z.object({
-  userId: z.string(),
   itemId: z.string(),
   quantity: z.number().positive(),
 });
@@ -22,6 +21,4 @@ export const CartUpdateSchema = z.object({
   quantity: z.number().min(0),
 });
 
-export const CartQuerySchema = z.object({
-  userId: z.string(),
-});
+export const CartQuerySchema = z.object({});

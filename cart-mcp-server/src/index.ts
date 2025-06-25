@@ -13,7 +13,7 @@ export class CartMCP extends McpAgent<Env> {
   });
 
   async init() {
-    registerTools(this.server, this.env);
+    registerTools(this.server, this.env, this.props);
   }
 }
 
@@ -21,6 +21,13 @@ export default {
   fetch(request: Request, env: Env, ctx: ExecutionContext) {
     const url = new URL(request.url);
 
+    const userId = request.headers.get("X-User-ID");
+
+    if (userId) {
+      ctx.props = {
+        userId: userId,
+      };
+    }
     if (url.pathname === "/sse" || url.pathname === "/sse/message") {
       return CartMCP.serveSSE("/sse").fetch(request, env, ctx);
     }
