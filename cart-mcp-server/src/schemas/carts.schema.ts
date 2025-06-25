@@ -6,7 +6,6 @@ export const CartItemSchema = z.object({
 });
 
 export const BulkCartSchema = z.object({
-  userId: z.string(),
   items: z.array(
     z.object({
       itemId: z.string(),
@@ -16,7 +15,6 @@ export const BulkCartSchema = z.object({
 });
 
 export const CartUpdateSchema = z.object({
-  userId: z.string(),
   itemId: z.string(),
   quantity: z.number().min(0),
 });
